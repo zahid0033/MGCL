@@ -27,14 +27,15 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated: true,
-                user: checkuser()
+                user: "checkuser()",
+                action: action.payload
             }
         case 'LOGOUT':
             localStorage.removeItem('usertoken')
             return {
                 ...state,
                 isAuthenticated: false,
-                user: {}
+                user: "Empty{}"
             }
         default:
             return state;
