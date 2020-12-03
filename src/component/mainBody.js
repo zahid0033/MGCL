@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
 import {Route} from "react-router-dom";
 import Agent from "./agent";
+import {connect} from 'react-redux'
+import Login from "./login";
+import Logout from "./logout";
 
 class MainBody extends Component {
     render() {
@@ -8,10 +11,23 @@ class MainBody extends Component {
             <div>
                 <div className="mainBody">
                     <Route exact path="/" component={Agent}/>
+                    {
+                        this.props.data ?
+                            <Route exact path="/login" component={Login}/>
+                        :
+                            <Route exact path="/logout" component={Logout}/>
+                    }
+
                 </div>
             </div>
         )
     }
 }
 
-export default MainBody;
+const mapStateToProps = (state) => {
+    return {
+        data : state.auth.isAuthenticated
+    }
+}
+
+export default connect(mapStateToProps,null)(MainBody);

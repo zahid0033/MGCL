@@ -2,21 +2,16 @@ import React,{Component} from 'react';
 import {connect} from "react-redux";
 import * as authActions from '../redux/actions/authActions'
 
-class Agent extends Component {
+class Login extends Component {
     componentDidMount() {
         this.props.setUsers()
-    }
-
-    logout = () => {
-        this.props.logoutuser()
     }
 
     render() {
         console.log(this.props)
         return (
             <div>
-                <h1>Hello - {this.props.data.action}</h1>
-                <button onClick={() => this.logout}>logout</button>
+                <h1>Login - {this.props.data.action}</h1>
             </div>
         )
     }
@@ -28,4 +23,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,authActions)(Agent);
+export default connect(mapStateToProps,authActions)(Login);

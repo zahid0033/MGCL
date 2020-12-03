@@ -35,7 +35,8 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated: false,
-                user: "Empty{}"
+                user: "Empty{}",
+                action: action.payload
             }
         default:
             return state;
