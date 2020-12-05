@@ -7,13 +7,15 @@ import {BrowserRouter as Router} from "react-router-dom";
 import { Provider } from "react-redux";
 import {createStore,applyMiddleware} from "redux";
 import rootReducer from "./redux/reducers/rootReducers";
+import { createBrowserHistory } from 'history'
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
+const history = createBrowserHistory()
 
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={createStoreWithMiddleware(rootReducer)}>
-          <Router>
+          <Router history={history}>
               <App />
           </Router>
       </Provider>

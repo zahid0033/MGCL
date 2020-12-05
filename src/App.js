@@ -1,12 +1,12 @@
 import './App.css';
 import { Switch } from 'react-router-dom';
-import MainBody from "./component/mainBody";
+import Router from "./router";
 
 function App() {
   return (
     <>
         <Switch>
-            <MainBody/>
+            <Router/>
         </Switch>
     </>
   );

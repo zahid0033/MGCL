@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from "react-redux";
 import * as authActions from '../redux/actions/authActions'
+import {Link} from "react-router-dom";
 
 class Agent extends Component {
     componentDidMount() {
@@ -8,7 +9,8 @@ class Agent extends Component {
     }
 
     logout = () => {
-        this.props.logoutuser()
+        this.props.logoutuser();
+        this.props.history.push('/login')
     }
 
     render() {
@@ -16,7 +18,8 @@ class Agent extends Component {
         return (
             <div>
                 <h1>Hello - {this.props.data.action}</h1>
-                <button onClick={() => this.logout}>logout</button>
+                <button onClick={() => this.logout()}>logout</button>
+                <Link to={"/agent"} >Agent Home </Link>
             </div>
         )
     }
