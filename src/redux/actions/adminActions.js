@@ -25,19 +25,25 @@ export const registerUser = (userData, history) => dispatch => {
 
 // Login - get user token
 export const loginAdmin = (userData, history) => dispatch => {
-    console.log(userData)
     axios.post("/adminAuth/signin", userData)
         .then(res => {
-            console.log("userdata",userData)
-            // Save to localStorage// Set token to localStorage
-            const { token } = res.data;
-            // Decode token to get user data
-            const decoded = jwt_decode(token);
-            localStorage.setItem("jwtToken", token);
-            // Set token to Auth header
-            setAuthToken(token);
-            // Set current user
-            dispatch(setCurrentUser(decoded));
+            if(res.data.success){
+                // Save to localStorage// Set token to localStorage
+                const { token } = res.data;
+                // Decode token to get user data
+                const decoded = jwt_decode(token);
+                localStorage.setItem("jwtToken", token);
+                // Set token to Auth header
+                setAuthToken(token);
+                // Set current user
+                history.push('/')
+                dispatch(setCurrentUser(decoded));
+            }else{
+                dispatch({
+                    type: 'GET_ERRORS',
+                    payload: res.data.message
+                })
+            }
         })
         .catch(err => {
                 console.log(err)

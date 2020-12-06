@@ -9,6 +9,12 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_CURRENT_USER':
+            return {
+                ...state,
+                isAuthenticated: !isEmpty(action.payload),
+                user: action.payload
+            }
         case 'SETUSER':
             return {
                 ...state,
@@ -21,14 +27,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated: false,
-                user: "Empty{}",
-                action: action.payload
-            }
-        case 'SET_CURRENT_USER':
-            return {
-                ...state,
-                isAuthenticated: !isEmpty(action.payload),
-                user: action.payload
+                user: {}
             }
         default:
             return state;

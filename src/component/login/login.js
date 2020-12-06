@@ -20,7 +20,7 @@ class Login extends Component {
                 <br/>
                 <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                     <Tab eventKey="home" title="Admin">
-                        <AdminLogin/>
+                        <AdminLogin {...this.props}/>
                     </Tab>
                     <Tab eventKey="profile" title="Agent">
                         <AgentLogin/>

@@ -29,6 +29,7 @@ class AdminLogin extends Component {
     render() {
         return (
             <Jumbotron>
+                {this.props.errors}
                 <h2 className="text-center">Admin Login</h2>
                 <Form onSubmit={this.onSubmit}>
                     <Form.Group controlId="formBasicEmail">
@@ -51,7 +52,8 @@ class AdminLogin extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 })
 
 const mapDispatchToProps = dispatch => {
