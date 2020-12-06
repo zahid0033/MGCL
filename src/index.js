@@ -9,11 +9,12 @@ import {createStore,applyMiddleware} from "redux";
 import rootReducer from "./redux/reducers/rootReducers";
 import { createBrowserHistory } from 'history'
 import axios from 'axios';
+import thunk from 'redux-thunk'
 
 const { REACT_APP_NOT_AXIOS_BASE_URL } = process.env;
 axios.defaults.baseURL = REACT_APP_NOT_AXIOS_BASE_URL;
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const history = createBrowserHistory()
 
 ReactDOM.render(

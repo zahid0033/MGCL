@@ -9,3 +9,4 @@ export const logoutuser = () => ({
     type: 'LOGOUT',
     payload: 'I am from auth logout'
 })
+

@@ -1,28 +1,46 @@
 import React,{Component} from "react";
 import {connect} from "react-redux";
-import {Form,Button,Jumbotron} from "react-bootstrap"
+import {Form,Button,Jumbotron} from "react-bootstrap";
+import {loginAdmin} from "../../redux/actions/adminActions";
+import {bindActionCreators} from "redux";
 
 class AdminLogin extends Component {
+    state = {
+        email: "",
+        password : ""
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        const adminData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.loginAdmin(adminData,this.props.history)
+    }
+
+    onChange = e => {
+
+        this.setState({
+            [e.target.name] : e.target.value
+        })
+    }
+
     render() {
         return (
             <Jumbotron>
                 <h2 className="text-center">Admin Login</h2>
-                <Form>
+                <Form onSubmit={this.onSubmit}>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                        </Form.Text>
+                        <Form.Control type="email" placeholder="Enter email" name="email" onChange={this.onChange} />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" placeholder="Enter Password" name="password" onChange={this.onChange} />
                     </Form.Group>
-                    <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group>
+
                     <Button variant="primary" type="submit">
                         Submit
                     </Button>
@@ -36,4 +54,10 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(AdminLogin)
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        loginAdmin
+    },dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AdminLogin)

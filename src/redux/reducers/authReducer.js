@@ -1,24 +1,10 @@
 // import { SETUSER, LOGOUT } from "../types/AuthTypes";
-import jwt from 'jsonwebtoken';
-const checkuser = () => {
-    if (localStorage.getItem('usertoken')) {
-        return jwt.decode(localStorage.getItem('usertoken'))
-    } else {
-        return {}
-    }
-}
-
-const checkAuthenticated = () => {
-    if (localStorage.getItem('usertoken')) {
-        return true
-    } else {
-        return false
-    }
-}
+// import jwt from 'jsonwebtoken';
+const isEmpty = require("is-empty");
 
 const initialState = {
-    isAuthenticated: checkAuthenticated(),
-    user: checkuser()
+    isAuthenticated: false,
+    user: {}
 };
 
 const authReducer = (state = initialState, action) => {
@@ -31,12 +17,18 @@ const authReducer = (state = initialState, action) => {
                 action: action.payload
             }
         case 'LOGOUT':
-            localStorage.removeItem('usertoken')
+            localStorage.removeItem('jwtToken')
             return {
                 ...state,
                 isAuthenticated: false,
                 user: "Empty{}",
                 action: action.payload
+            }
+        case 'SET_CURRENT_USER':
+            return {
+                ...state,
+                isAuthenticated: !isEmpty(action.payload),
+                user: action.payload
             }
         default:
             return state;
