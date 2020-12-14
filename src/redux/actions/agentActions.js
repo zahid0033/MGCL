@@ -6,13 +6,15 @@ import setCurrentUser from "./setCurrentUser";
 import {GET_ERRORS} from '../type/authTypes'
 
 // Register User
-export const registerUser = (userData, history) => dispatch => {
+export const registerAgent = (userData, history) => dispatch => {
+    console.log(userData)
     axios
         .post("/api/register", qs.stringify(userData))
         .then(res => {
             history.push("/verifyemail", userData)
         }) // re-direct to email verification on successful register
         .catch(err => {
+            console.log(err)
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
@@ -22,8 +24,8 @@ export const registerUser = (userData, history) => dispatch => {
 
 
 // Login - get user token
-export const loginAdmin = (userData, history) => dispatch => {
-    axios.post("/adminAuth/signin", userData)
+export const loginAgent = (userData, history) => dispatch => {
+    axios.post("/agentAuth/signin", userData)
         .then(res => {
             if(res.data.success){
                 // Save to localStorage// Set token to localStorage
@@ -34,7 +36,7 @@ export const loginAdmin = (userData, history) => dispatch => {
                 // Set token to Auth header
                 setAuthToken(token);
                 // Set current user
-                history.push('/agent')
+                history.push('/')
                 dispatch(setCurrentUser(decoded));
             }else{
                 dispatch({

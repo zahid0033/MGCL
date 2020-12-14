@@ -1,24 +1,45 @@
 import React,{Component} from "react";
 import {connect} from "react-redux";
 import {Form,Button,Jumbotron} from "react-bootstrap";
+import {loginAgent} from "../../redux/actions/agentActions";
+import {bindActionCreators} from "redux";
 
 class AgentLogin extends Component {
+    state = {
+        email: "",
+        password : ""
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        const agentData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.loginAgent(agentData,this.props.history)
+    }
+
+    onChange = e => {
+
+        this.setState({
+            [e.target.name] : e.target.value
+        })
+    }
+
     render() {
         return (
             <Jumbotron>
+                {this.props.errors}
                 <h2 className="text-center">Agent Login</h2>
-                <Form>
-                    <Form.Group controlId="formBasicEmail">
+                <Form onSubmit={this.onSubmit}>
+                    <Form.Group>
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                        </Form.Text>
+                        <Form.Control type="email" name="email" placeholder="Enter email" onChange={this.onChange} />
                     </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group>
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" name="password" placeholder="Password" onChange={this.onChange}/>
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
@@ -31,7 +52,15 @@ class AgentLogin extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 })
 
-export default connect(mapStateToProps)(AgentLogin)
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        loginAgent
+    },dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AgentLogin)

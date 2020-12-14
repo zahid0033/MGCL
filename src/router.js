@@ -5,8 +5,11 @@ import Login from "./component/login/login";
 import Logout from "./component/logout";
 import Home from "./component/agent/home";
 import AgentRoute from "./component/ProtectedRoute/agentRoute";
+import AdminRoute from "./component/ProtectedRoute/adminRoute";
 import Topbar from "./component/template/topbar";
 import GraniteList from "./component/graniteList/graniteList";
+import LoginRoute from "./component/ProtectedRoute/loginRoute";
+import Admin from "./component/admin/admin";
 
 class Router extends Component {
     render() {
@@ -15,10 +18,11 @@ class Router extends Component {
                 <Topbar/>
                 <div className="mainBody">
                     <Route exact path="/" component={Agent}/>
-                    <Route exact path="/login" component={Login}/>
+                    <LoginRoute exact path="/login" component={Login}/>
                     <Route exact path="/logout" component={Logout}/>
                     <Route exact path="/granite/list" component={GraniteList}/>
                     <AgentRoute exact path="/agent" component={Home}/>
+                    <AdminRoute exact path="/admin" component={Admin}/>
                 </div>
             </div>
         )

@@ -1,12 +1,11 @@
-// import { SETUSER, LOGOUT, SETADMIN, LOGOUTADMIN } from "../types/AuthTypes";
+import { SETUSER, LOGOUT } from "../type/authTypes";
 
 export const setUsers = () => ({
-    type: 'SETUSER',
+    type: SETUSER,
     payload: 'I am from auth action'
 })
 
 export const logoutuser = () => ({
-    type: 'LOGOUT',
+    type: LOGOUT,
     payload: 'I am from auth logout'
 })
-

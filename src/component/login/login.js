@@ -23,7 +23,7 @@ class Login extends Component {
                         <AdminLogin {...this.props}/>
                     </Tab>
                     <Tab eventKey="profile" title="Agent">
-                        <AgentLogin/>
+                        <AgentLogin {...this.props}/>
                     </Tab>
                 </Tabs>
             </div>
