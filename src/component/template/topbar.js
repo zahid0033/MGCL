@@ -2,16 +2,15 @@ import React,{Component} from 'react'
 import {Navbar,Nav,NavDropdown} from "react-bootstrap";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import {logoutuser} from "../../redux/actions/authActions";
+import logoutUser from "../../redux/actions/authActions";
 import {bindActionCreators} from "redux";
 
 class Topbar extends Component {
     logout = () => {
-        this.props.logoutuser();
+        this.props.logoutUser();
     }
 
     render() {
-        console.log("authhh",this.props.auth)
         return (
             <div>
                 <Navbar bg="dark" expand="lg" variant="dark">
@@ -34,19 +33,23 @@ class Topbar extends Component {
                                     this.props.auth.isAuthenticated ?
                                         (
                                             <>
-                                                <Nav.Link onClick={() => this.logout()}>Logout</Nav.Link>
                                                 {
                                                     this.props.auth.type === 'agent' ?
                                                         (
                                                             <>
-                                                                <Nav.Link as={Link} to="/agent">Agent</Nav.Link>
+                                                                <Nav.Link as={Link} to="/agent">Requested Granite</Nav.Link>
+                                                                <Nav.Link as={Link} to="/agent">D/O</Nav.Link>
+                                                                <Nav.Link as={Link} to="/agent">Profile</Nav.Link>
                                                             </>
                                                         ): (
                                                             <>
-                                                                <Nav.Link as={Link} to="/admin">Admin</Nav.Link>
+                                                                <Nav.Link as={Link} to="/agent">Requested Granite</Nav.Link>
+                                                                <Nav.Link as={Link} to="/agent">Pending</Nav.Link>
+                                                                <Nav.Link as={Link} to="/admin">Profile</Nav.Link>
                                                             </>
                                                         )
                                                 }
+                                                <Nav.Link onClick={() => this.logout()}>Logout</Nav.Link>
 
                                             </>
                                         ) : (
@@ -71,7 +74,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        logoutuser
+        logoutUser
     },dispatch)
 }
 

@@ -4,8 +4,9 @@ export const setUsers = () => ({
     type: SETUSER,
     payload: 'I am from auth action'
 })
-
-export const logoutuser = () => ({
+const logoutUser = () => ({
     type: LOGOUT,
     payload: 'I am from auth logout'
 })
+
+export default logoutUser

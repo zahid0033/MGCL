@@ -5,21 +5,41 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom";
 import { Provider } from "react-redux";
-import {createStore,applyMiddleware} from "redux";
-import rootReducer from "./redux/reducers/rootReducers";
-import { createBrowserHistory } from 'history'
+import store from "./redux/reducers/rootReducers";
+import { createBrowserHistory } from 'history';
+import jwt_decode from "jwt-decode";
 import axios from 'axios';
-import thunk from 'redux-thunk'
+import setAuthToken from "./utils/setAuthToken";
+import setCurrentUser from "./redux/actions/setCurrentUser";
+import logoutUser from "./redux/actions/authActions"
 
 const { REACT_APP_NOT_AXIOS_BASE_URL } = process.env;
 axios.defaults.baseURL = REACT_APP_NOT_AXIOS_BASE_URL;
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+if (localStorage.jwtToken) {
+    // Set auth token header auth
+    const token = localStorage.jwtToken;
+    setAuthToken(token);
+    // Decode token and get user info and exp
+    const decoded = jwt_decode(token);
+    // Set user and isAuthenticated
+    store.dispatch(setCurrentUser(decoded));
+    // Check for expired token
+    const currentTime = Date.now() / 1000;
+    // to get in milliseconds
+    if (decoded.exp < currentTime) {
+        // Logout user
+        store.dispatch(logoutUser());
+        // Redirect to home
+        window.location.href = "./";
+    }
+}
+
 const history = createBrowserHistory()
 
 ReactDOM.render(
   <React.StrictMode>
-      <Provider store={createStoreWithMiddleware(rootReducer)}>
+      <Provider store={store}>
           <Router history={history}>
               <App />
           </Router>
